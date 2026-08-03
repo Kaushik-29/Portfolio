@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Typewriter } from "./Typewriter";
 import { GoldParticles } from "./GoldParticles";
 import { HeroProfile } from "./HeroProfile";
+import resumePdf from "../../assets/Kaushik_Kumar_Reddy_Resume.pdf";
 
 export function Hero() {
   return (
@@ -114,11 +115,8 @@ export function Hero() {
           >
             {/* Download Resume Button (Primary CTA) */}
             <motion.a
-              href="#" // Replace with actual resume file path when available
-              onClick={(e) => {
-                e.preventDefault();
-                alert("Resume download clicked! Add a resume file path in Hero.tsx (e.g. href='/resume.pdf') to enable actual download.");
-              }}
+              href={resumePdf}
+              download="Kaushik_Kumar_Reddy_Resume.pdf"
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 0 25px rgba(255, 215, 0, 0.65)",
