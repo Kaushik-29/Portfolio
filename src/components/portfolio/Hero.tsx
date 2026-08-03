@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Typewriter } from "./Typewriter";
 import { GoldParticles } from "./GoldParticles";
 import { HeroProfile } from "./HeroProfile";
-import resumePdf from "../../assets/Kaushik_Kumar_Reddy_Resume.pdf";
+
 
 export function Hero() {
   return (
@@ -115,7 +115,7 @@ export function Hero() {
           >
             {/* Download Resume Button (Primary CTA) */}
             <motion.a
-              href={resumePdf}
+              href="/Kaushik_Kumar_Reddy_Resume.pdf"
               download="Kaushik_Kumar_Reddy_Resume.pdf"
               whileHover={{
                 scale: 1.05,
