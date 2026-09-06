@@ -15,10 +15,11 @@ const links = [
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 30);
     on();
-    window.addEventListener("scroll", on);
+    window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
   }, []);
 
@@ -27,8 +28,8 @@ export function Nav() {
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className={`fixed inset-x-0 top-0 z-50 transition-colors ${
-        scrolled ? "bg-deep-red-3/85 backdrop-blur-md border-b border-gold/20" : "bg-transparent"
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-deep-red-3/85 backdrop-blur-md border-b border-gold/20 shadow-lg" : "bg-transparent"
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
