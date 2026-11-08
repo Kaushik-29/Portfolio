@@ -1,51 +1,15 @@
 import { motion } from "framer-motion";
-import type { IconType } from "react-icons";
-import {
-  FaPython,
-  FaJava,
-  FaJs,
-  FaReact,
-  FaNodeJs,
-  FaDocker,
-  FaAws,
-  FaGitAlt,
-} from "react-icons/fa";
-import {
-  SiCplusplus,
-  SiTypescript,
-  SiFastapi,
-  SiFlask,
-  SiTensorflow,
-  SiOpencv,
-  SiMongodb,
-  SiMysql,
-} from "react-icons/si";
 import { SectionHeading } from "./SectionHeading";
+import { skills as skillNames, sectionHeadings } from "@/content/portfolio";
+import { skillIcons } from "@/content/icons";
 
-const skills: { name: string; icon: IconType }[] = [
-  { name: "Python", icon: FaPython },
-  { name: "Java", icon: FaJava },
-  { name: "C++", icon: SiCplusplus },
-  { name: "JavaScript", icon: FaJs },
-  { name: "TypeScript", icon: SiTypescript },
-  { name: "React", icon: FaReact },
-  { name: "Node.js", icon: FaNodeJs },
-  { name: "FastAPI", icon: SiFastapi },
-  { name: "Flask", icon: SiFlask },
-  { name: "TensorFlow", icon: SiTensorflow },
-  { name: "OpenCV", icon: SiOpencv },
-  { name: "MongoDB", icon: SiMongodb },
-  { name: "MySQL", icon: SiMysql },
-  { name: "Git", icon: FaGitAlt },
-  { name: "Docker", icon: FaDocker },
-  { name: "AWS", icon: FaAws },
-];
+const skills = skillNames.map((name) => ({ name, icon: skillIcons[name] }));
 
 export function Skills() {
   return (
     <section id="skills" className="section-pad relative">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading eyebrow="Toolkit" title="Technical Skills" />
+        <SectionHeading {...sectionHeadings.skills} />
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {skills.map((s, i) => {
             const Icon = s.icon;

@@ -2,13 +2,9 @@ import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import profile from "@/assets/about.jpeg";
 import { SectionHeading } from "./SectionHeading";
+import { about, sectionHeadings } from "@/content/portfolio";
 
-const stats = [
-  { label: "Projects Completed", value: 15 },
-  { label: "Certifications Earned", value: 12 },
-  { label: "Hackathons Participated", value: 8 },
-  { label: "CGPA", value: 8.94, decimals: 2 },
-];
+const stats = about.stats;
 
 function Counter({ value, decimals = 0 }: { value: number; decimals?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -31,19 +27,13 @@ function Counter({ value, decimals = 0 }: { value: number; decimals?: number }) 
   return <span ref={ref}>{n.toFixed(decimals)}</span>;
 }
 
-const badges = [
-  "AI & ML Enthusiast",
-  "Full Stack Developer",
-  "Research-Oriented Engineer",
-  "Hackathon Participant",
-  "Problem Solver",
-];
+const badges = about.badges;
 
 export function About() {
   return (
     <section id="about" className="section-pad relative">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading eyebrow="Who I Am" title="About Me" />
+        <SectionHeading {...sectionHeadings.about} />
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -55,7 +45,7 @@ export function About() {
             <div className="absolute -left-4 -top-4 h-full w-full border border-gold/60" />
             <img
               src={profile}
-              alt="Kaushik working"
+              alt={about.imageAlt}
               loading="lazy"
               width={512}
               height={640}
@@ -73,18 +63,13 @@ export function About() {
             transition={{ duration: 0.7 }}
           >
             <h3 className="font-brush gold-gradient-text mb-4 text-4xl md:text-5xl">
-              Crafting intelligent products.
+              {about.heading}
             </h3>
             <p className="text-base leading-relaxed text-cream/85 md:text-lg">
-              I'm an undergraduate Computer Science engineer specializing in Artificial
-              Intelligence and Machine Learning. I love bridging the gap between deep research
-              and production-grade software — building scalable full-stack systems, training
-              models, and shipping AI-powered features that solve real problems.
+              {about.paragraphs[0]}
             </p>
             <p className="mt-4 text-base leading-relaxed text-cream/75">
-              From hackathon prototypes to research-grade projects, I focus on clean
-              architecture, thoughtful UX, and engineering rigor — the kind of work recruiters
-              and product teams can trust on day one.
+              {about.paragraphs[1]}
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">

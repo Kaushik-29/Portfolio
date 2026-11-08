@@ -9,6 +9,7 @@ import {
   SiCoursera,
 } from "react-icons/si";
 import type { IconType } from "react-icons";
+import { certifications, sectionHeadings, type CertLogoKey } from "@/content/portfolio";
 
 
 /* ─────────────────────────────────────────────
@@ -52,128 +53,19 @@ function BrandLogo({ logoKey, color, fallback }: { logoKey: string; color: strin
 /* ─────────────────────────────────────────────
    12 certifications  —  4 columns × 3 rows
 ───────────────────────────────────────────── */
-const certificationsList = [
-  {
-    title: "C Programming For Beginners – Master the C Language",
-    issuer: "UDEMY",
-    issuerFull: "Udemy",
-    date: "Nov 2023",
-    logoKey: "Udemy",
-    color: "#A435F0",
-    fallback: "U",
-    desc: "Comprehensive 25.5-hour course covering C fundamentals, memory management, pointers, and systems programming concepts.",
-  },
-  {
-    title: "C++ Data Structures in the STL",
-    issuer: "COURSERA",
-    issuerFull: "Coursera",
-    date: "Apr 2024",
-    logoKey: "Coursera",
-    color: "#0056D2",
-    fallback: "C",
-    desc: "Hands-on project certificate covering STL containers, iterators, algorithms, and modern C++ data structure patterns.",
-  },
-  {
-    title: "Programming in Java (NPTEL)",
-    issuer: "NPTEL",
-    issuerFull: "NPTEL / IIT",
-    date: "Jul – Oct 2024",
-    logoKey: "NPTEL",
-    color: "#E76F51",
-    fallback: "N",
-    desc: "Elite-ranked course covering core Java, OOP principles, exception handling, and collections with a score of 62%.",
-  },
-  {
-    title: "Deep Learning Onramp",
-    issuer: "MATHWORKS",
-    issuerFull: "MathWorks",
-    date: "Apr 26, 2025",
-    logoKey: "MathWorks",
-    color: "#D1232A",
-    fallback: "MW",
-    desc: "Hands-on introduction to deep learning networks, convolutional architectures, and training workflows using MATLAB.",
-  },
-  {
-    title: "Microsoft Certified: Azure AI Fundamentals (AI-900)",
-    issuer: "MICROSOFT",
-    issuerFull: "Microsoft",
-    date: "Aug 28, 2025",
-    logoKey: "Microsoft",
-    color: "#0078D4",
-    fallback: "MS",
-    desc: "Demonstrates understanding of machine learning models and artificial intelligence concepts built on Microsoft Azure.",
-  },
-  {
-    title: "Introduction to Machine Learning (NPTEL)",
-    issuer: "NPTEL",
-    issuerFull: "NPTEL / IIT",
-    date: "Jul – Sep 2025",
-    logoKey: "NPTEL",
-    color: "#E76F51",
-    fallback: "N",
-    desc: "8-week rigorous course covering supervised learning, regression, classification, clustering, and model evaluation.",
-  },
-  {
-    title: "Networking Basics",
-    issuer: "CISCO",
-    issuerFull: "Cisco Networking Academy",
-    date: "Oct 3, 2025",
-    logoKey: "Cisco",
-    color: "#00b4d8",
-    fallback: "CI",
-    desc: "Completed training on network switching, routing principles, protocols, and standard network architectures.",
-  },
-  {
-    title: "Salesforce Certified Agentforce Specialist",
-    issuer: "SALESFORCE",
-    issuerFull: "Salesforce",
-    date: "Dec 2025",
-    logoKey: "Salesforce",
-    color: "#00A1E0",
-    fallback: "SF",
-    desc: "Credentialed in building, configuring, and deploying autonomous AI agents with Agentforce technologies.",
-  },
-  {
-    title: "Microsoft Certified: Azure Fundamentals (AZ-900)",
-    issuer: "MICROSOFT",
-    issuerFull: "Microsoft",
-    date: "Dec 2025",
-    logoKey: "Microsoft",
-    color: "#0078D4",
-    fallback: "MS",
-    desc: "Validates foundational capabilities across cloud services, operating models, security, privacy, and architecture.",
-  },
-  {
-    title: "SAP Certified – SAP Generative AI Developer",
-    issuer: "SAP",
-    issuerFull: "SAP",
-    date: "Valid thru Mar 2027",
-    logoKey: "SAP",
-    color: "#008FD3",
-    fallback: "SAP",
-    desc: "Focuses on deploying Large Language Models (LLMs), orchestration frameworks, and SAP AI Core infrastructure.",
-  },
-  {
-    title: "AWS Certified Cloud Practitioner",
-    issuer: "AMAZON",
-    issuerFull: "Amazon Web Services (AWS)",
-    date: "Valid thru Mar 2029",
-    logoKey: "AWS",
-    color: "#FF9900",
-    fallback: "AWS",
-    desc: "Validates foundational knowledge of AWS Cloud platform, architectural principles, services, and security compliance.",
-  },
-  {
-    title: "AWS Certified AI Practitioner",
-    issuer: "AMAZON",
-    issuerFull: "Amazon Web Services (AWS)",
-    date: "Valid thru Jun 2029",
-    logoKey: "AWS",
-    color: "#FF9900",
-    fallback: "AWS",
-    desc: "Validates forward-looking expertise in artificial intelligence, machine learning, and generative AI patterns on AWS.",
-  },
-];
+const certBadge: Record<CertLogoKey, { color: string; fallback: string }> = {
+  Udemy: { color: "#A435F0", fallback: "U" },
+  Coursera: { color: "#0056D2", fallback: "C" },
+  NPTEL: { color: "#E76F51", fallback: "N" },
+  MathWorks: { color: "#D1232A", fallback: "MW" },
+  Microsoft: { color: "#0078D4", fallback: "MS" },
+  Cisco: { color: "#00b4d8", fallback: "CI" },
+  Salesforce: { color: "#00A1E0", fallback: "SF" },
+  SAP: { color: "#008FD3", fallback: "SAP" },
+  AWS: { color: "#FF9900", fallback: "AWS" },
+};
+
+const certificationsList = certifications.map((c) => ({ ...c, ...certBadge[c.logoKey] }));
 
 export function Certifications() {
   return (
@@ -185,7 +77,7 @@ export function Certifications() {
       />
 
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading eyebrow="Credentials" title="Certifications" />
+        <SectionHeading {...sectionHeadings.certifications} />
 
         {/* 4-column × 3-row grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

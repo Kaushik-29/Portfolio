@@ -6,6 +6,12 @@ import type { LucideIcon } from "lucide-react";
 import flexIcon from "@/assets/flex.ico";
 import alleivoIcon from "@/assets/alleivo.ico";
 import agriIcon from "@/assets/agri.ico";
+import {
+  projects as projectData,
+  projectsMore,
+  sectionHeadings,
+  type ProjectItem,
+} from "@/content/portfolio";
 
 interface Project {
   title: string;
@@ -21,52 +27,40 @@ interface Project {
   live?: string;
 }
 
-const projects: Project[] = [
-  {
-    title: "Flex-Flow-Fusion",
-    subtitle: "AI • Computer Vision • Full Stack",
-    desc: "AI-powered fitness platform that performs real-time posture analysis using computer vision, delivers instant exercise feedback, and tracks workout progress through an interactive full-stack web application.",
-    stack: ["React", "TypeScript", "Tailwind CSS", "TensorFlow.js", "MoveNet", "FastAPI", "MongoDB"],
+const projectStyle: Record<
+  ProjectItem["key"],
+  Pick<Project, "gradient" | "Icon" | "customIconUrl" | "iconColor" | "glowColor">
+> = {
+  flex: {
     gradient: "linear-gradient(135deg, #0f1f3d 0%, #1a3a6b 40%, #0d2a4a 70%, #0a1628 100%)",
     Icon: Dumbbell,
     customIconUrl: flexIcon,
     iconColor: "#60A5FA",
     glowColor: "rgba(96,165,250,0.35)",
-    github: "https://github.com/Kaushik-29/flex-flow-fusion",
-    live: "https://flexflowfusion.netlify.app/",
   },
-  {
-    title: "Alleivo",
-    subtitle: "AI • FinTech • Full Stack",
-    desc: "Intelligent insurance management platform for gig delivery partners that predicts income disruptions, automates eligibility verification, and enables data-driven policy recommendations through AI-powered risk assessment.",
-    stack: ["React", "FastAPI", "PostgreSQL", "Redis", "Celery", "XGBoost", "Tailwind CSS"],
+  alleivo: {
     gradient: "linear-gradient(135deg, #1a0a2e 0%, #3d1a6e 40%, #2a0f52 70%, #120720 100%)",
     Icon: ShieldCheck,
     customIconUrl: alleivoIcon,
     iconColor: "#C084FC",
     glowColor: "rgba(192,132,252,0.35)",
-    github: "https://github.com/Kaushik-29/Allievo",
-    live: "https://allievo.netlify.app/",
   },
-  {
-    title: "CommodityIQ",
-    subtitle: "Machine Learning • Data Science",
-    desc: "AI-driven forecasting platform that predicts agricultural commodity prices using historical market trends and weather data, helping farmers and traders make informed selling and procurement decisions.",
-    stack: ["Python", "LSTM", "XGBoost", "Scikit-learn", "Pandas", "Flask", "Matplotlib"],
+  commodity: {
     gradient: "linear-gradient(135deg, #0d2218 0%, #1a4a2a 40%, #0f3320 70%, #071610 100%)",
     Icon: TrendingUp,
     customIconUrl: agriIcon,
     iconColor: "#34D399",
     glowColor: "rgba(52,211,153,0.35)",
-    github: "https://github.com/Kaushik-29/Agri-Commodity-Price-Predictor",
   },
-];
+};
+
+const projects: Project[] = projectData.map((p) => ({ ...p, ...projectStyle[p.key] }));
 
 export function Projects() {
   return (
     <section id="projects" className="section-pad relative">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading eyebrow="Selected Work" title="Featured Projects" />
+        <SectionHeading {...sectionHeadings.projects} />
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, i) => {
             const Icon = p.Icon;
@@ -179,15 +173,14 @@ export function Projects() {
           className="mt-16 flex flex-col items-center gap-5"
         >
           <p className="max-w-md text-center text-sm leading-relaxed text-cream/40">
-            Explore more AI, Full Stack, Machine Learning, Cloud, and Open Source projects
-            on my GitHub profile.
+            {projectsMore.text}
           </p>
 
           <motion.a
-            href="https://github.com/Kaushik-29"
+            href={projectsMore.href}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="View all projects on GitHub"
+            aria-label={projectsMore.label}
             whileHover={{ y: -4, scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
@@ -215,7 +208,7 @@ export function Projects() {
               <Github size={18} strokeWidth={2} />
             </motion.span>
             <span className="text-cream transition-colors duration-300 group-hover:text-gold">
-              View All Projects on GitHub
+              {projectsMore.label}
             </span>
             <motion.span
               className="shrink-0 text-gold/70 transition-colors duration-300 group-hover:text-gold"

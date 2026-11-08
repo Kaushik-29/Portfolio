@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Typewriter } from "./Typewriter";
 import { GoldParticles } from "./GoldParticles";
 import { HeroProfile } from "./HeroProfile";
+import { profile } from "@/content/portfolio";
 
 
 export function Hero() {
@@ -55,9 +56,9 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.35 }}
             className="font-brush gold-gradient-text mt-2 text-5xl sm:text-6xl leading-[1.05] md:text-8xl"
           >
-            Kaushik Kumar
+            {profile.nameLines[0]}
             <br />
-            Reddy S
+            {profile.nameLines[1]}
           </motion.h1>
           <motion.div
             initial={{ width: 0 }}
@@ -72,12 +73,12 @@ export function Hero() {
             className="mt-6 space-y-1"
           >
             <p className="text-base font-semibold text-cream md:text-lg">
-              B.Tech CSE (AI &amp; ML)
+              {profile.degree}
             </p>
             <p className="text-sm text-cream/80 md:text-base">
-              SRM Institute of Science and Technology
+              {profile.institution}
             </p>
-            <p className="text-sm text-gold">Expected Graduation: 2027</p>
+            <p className="text-sm text-gold">{profile.graduation}</p>
           </motion.div>
           <motion.p
             initial={{ opacity: 0 }}
@@ -85,8 +86,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="mt-6 max-w-xl text-base leading-relaxed text-cream/85 md:text-lg"
           >
-            Full Stack Engineer passionate about AI, Machine Learning, scalable systems, and
-            impactful products.
+            {profile.tagline}
           </motion.p>
 
           <motion.div
@@ -97,13 +97,7 @@ export function Hero() {
           >
             <span className="text-cream/80">I'm</span>
             <Typewriter
-              words={[
-                "an Aspiring AI Engineer",
-                "a Full Stack Developer",
-                "an AI Product Builder",
-                "a Machine Learning Enthusiast",
-                "a Problem Solver",
-              ]}
+              words={[...profile.typewriterWords]}
             />
           </motion.div>
 
@@ -115,8 +109,8 @@ export function Hero() {
           >
             {/* Download Resume Button (Primary CTA) */}
             <motion.a
-              href="/Kaushik_Kumar_Reddy_Resume.pdf"
-              download="Kaushik_Kumar_Reddy_Resume.pdf"
+              href={profile.resume.href}
+              download={profile.resume.fileName}
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 0 25px rgba(255, 215, 0, 0.65)",

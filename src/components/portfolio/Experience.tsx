@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
+import { experiences as experienceData, sectionHeadings, type ExperienceItem } from "@/content/portfolio";
 
 /* ─────────────────────────────────────────────
    Data
@@ -29,68 +30,15 @@ interface Exp {
   certUrl: string;
 }
 
-const experiences: Exp[] = [
-  {
-    Icon: Brain,
-    title: "AI-ML Virtual Intern",
-    org: "Google for Developers × EduSkills",
-    duration: "Apr 2024 – Jun 2024",
-    tag: "ARTIFICIAL INTELLIGENCE",
-    desc: "Completed a 10-week AI & Machine Learning virtual internship focused on supervised learning, data preprocessing, model evaluation, and real-world AI workflows using Google's tools and frameworks.",
-    skills: ["Python", "Machine Learning", "Scikit-Learn", "Data Analysis", "Neural Networks"],
-    accent: "#60A5FA",
-    accentBg: "rgba(96,165,250,0.12)",
-    certUrl: "https://drive.google.com/file/d/1cNteqadIRcs9CGnGDjxDf_F9Ez7S5y49/view?usp=sharing",
-  },
-  {
-    Icon: Code2,
-    title: "Python Full Stack Virtual Intern",
-    org: "EduSkills",
-    duration: "Oct 2024 – Dec 2024",
-    tag: "FULL STACK DEVELOPMENT",
-    desc: "Developed full-stack web applications using Python, Flask, SQL, REST APIs, backend development, authentication, and deployment while gaining practical industry experience.",
-    skills: ["Python", "Flask", "SQL", "REST API", "Authentication", "Deployment"],
-    accent: "#34D399",
-    accentBg: "rgba(52,211,153,0.12)",
-    certUrl: "https://drive.google.com/file/d/1CmSo24bCa2vjT9RKvjE6Nefg2LBT_9WN/view?usp=sharing",
-  },
-  {
-    Icon: Cloud,
-    title: "Cloud Virtual Intern",
-    org: "AWS Academy",
-    duration: "Jan 2025 – Mar 2025",
-    tag: "CLOUD COMPUTING",
-    desc: "Learned cloud computing fundamentals including compute, storage, networking, virtualization, and deployment using AWS cloud services and best practices for scalable infrastructure.",
-    skills: ["AWS", "EC2", "S3", "Cloud Computing", "Networking", "Virtualization"],
-    accent: "#FBBF24",
-    accentBg: "rgba(251,191,36,0.12)",
-    certUrl: "https://drive.google.com/file/d/1rYsOaatZsKSDM7oXLm4A4IpWqSYq4Mfg/view?usp=sharing",
-  },
-  {
-    Icon: Database,
-    title: "Data Science Master Virtual Intern",
-    org: "Altair",
-    duration: "Apr 2025 – Jun 2025",
-    tag: "DATA SCIENCE",
-    desc: "Applied data science techniques including statistical analysis, visualization, feature engineering, and machine learning to solve real-world analytical problems using Altair's platform.",
-    skills: ["Data Science", "Python", "Data Visualization", "Feature Engineering", "Machine Learning"],
-    accent: "#C084FC",
-    accentBg: "rgba(192,132,252,0.12)",
-    certUrl: "https://drive.google.com/file/d/1fmIbt9WgyOFedERN6E33pA1m-m0f7hga/view?usp=sharing",
-  },
-  {
-    Icon: ShieldCheck,
-    title: "Network Security Associate",
-    org: "Fortinet",
-    duration: "Jul 2025 – Sep 2025",
-    tag: "CYBERSECURITY",
-    desc: "Explored modern cybersecurity concepts including network security, firewalls, threat detection, secure communication, and enterprise security best practices using Fortinet's solutions.",
-    skills: ["Cyber Security", "Networking", "Firewalls", "Threat Detection", "Enterprise Security"],
-    accent: "#F87171",
-    accentBg: "rgba(248,113,113,0.12)",
-    certUrl: "https://drive.google.com/file/d/1XsM7bafnlp8-XCqM9YrT4VdZu3KJ2Zpc/view?usp=sharing",
-  },
-];
+const expStyle: Record<ExperienceItem["key"], Pick<Exp, "Icon" | "accent" | "accentBg">> = {
+  ai: { Icon: Brain, accent: "#60A5FA", accentBg: "rgba(96,165,250,0.12)" },
+  fullstack: { Icon: Code2, accent: "#34D399", accentBg: "rgba(52,211,153,0.12)" },
+  cloud: { Icon: Cloud, accent: "#FBBF24", accentBg: "rgba(251,191,36,0.12)" },
+  data: { Icon: Database, accent: "#C084FC", accentBg: "rgba(192,132,252,0.12)" },
+  security: { Icon: ShieldCheck, accent: "#F87171", accentBg: "rgba(248,113,113,0.12)" },
+};
+
+const experiences: Exp[] = experienceData.map((e) => ({ ...e, ...expStyle[e.key] }));
 
 /* ─────────────────────────────────────────────
    Paper Clip SVG (dark-theme tinted)
@@ -484,7 +432,7 @@ export function Experience() {
 
       <div className="mx-auto max-w-[1100px] px-6">
         {/* ── Section heading — reuses existing site heading style ── */}
-        <SectionHeading eyebrow="Journey" title="Experience" />
+        <SectionHeading {...sectionHeadings.experience} />
 
         {/* Subtitle */}
         <motion.p

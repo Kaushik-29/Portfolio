@@ -2,46 +2,24 @@ import { motion } from "framer-motion";
 import { FaUniversity, FaSchool, FaGraduationCap } from "react-icons/fa";
 import type { IconType } from "react-icons";
 import { SectionHeading } from "./SectionHeading";
+import { education, sectionHeadings, type EducationItem } from "@/content/portfolio";
 
-const items: {
-  icon: IconType;
-  logoUrl: string;
-  name: string;
-  degree: string;
-  score: string;
-  years: string;
-}[] = [
-  {
-    icon: FaUniversity,
-    logoUrl: "https://skillnest.srmist.edu.in/srm-logo.png",
-    name: "SRM Institute of Science and Technology",
-    degree: "B.Tech Computer Science Engineering (AI & ML)",
-    score: "CGPA: 8.94",
-    years: "2023 – 2027",
-  },
-  {
-    icon: FaGraduationCap,
-    logoUrl: "https://play-lh.googleusercontent.com/I5H5lHQojDjCkstsoMn1lCHaVIOkBUSnGIjgfvoS45owHgdqgsj3SQrlLa8hIP38vawQRn7EijA84TuRK5FdPg",
-    name: "Sri Chaitanya Junior College",
-    degree: "Higher Secondary — MPC (Mathematics, Physics, Chemistry)",
-    score: "Percentage: 83.7%",
-    years: "2021 – 2023",
-  },
-  {
-    icon: FaSchool,
-    logoUrl: "https://www.addressedu.com/assets/user_logo/be03d44140886c49e0772cb6752e66dc.jpeg",
-    name: "Green Field International School",
-    degree: "CBSE — Secondary Education (Class 10)",
-    score: "Percentage: 88.8%",
-    years: "2020 – 2021",
-  },
-];
+const eduIcons: Record<EducationItem["key"], IconType> = {
+  university: FaUniversity,
+  college: FaGraduationCap,
+  school: FaSchool,
+};
+
+const items: (EducationItem & { icon: IconType })[] = education.map((e) => ({
+  ...e,
+  icon: eduIcons[e.key],
+}));
 
 export function Education() {
   return (
     <section id="education" className="section-pad relative">
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading eyebrow="Academic Path" title="Education" />
+        <SectionHeading {...sectionHeadings.education} />
         <div className="space-y-6">
           {items.map((it, i) => {
             const Icon = it.icon;

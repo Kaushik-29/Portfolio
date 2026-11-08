@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   FaGithub,
@@ -7,88 +6,21 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { SectionHeading } from "./SectionHeading";
-import { toast } from "sonner";
+import { contact, sectionHeadings, type ContactLinkKey } from "@/content/portfolio";
+import { useContactForm } from "@/hooks/use-contact-form";
+import type { IconType } from "react-icons";
 
-// ── Web3Forms config ─────────────────────────────────────────────────────────
-// Free plan: unlimited submissions. Sign up / get key at https://web3forms.com
-const WEB3FORMS_ACCESS_KEY = "9f1a970a-1e83-42e4-8aa2-154e2b317048";
-// ─────────────────────────────────────────────────────────────────────────────
+const contactIcons: Record<ContactLinkKey, IconType> = {
+  github: FaGithub,
+  linkedin: FaLinkedin,
+  email: FaEnvelope,
+  location: FaMapMarkerAlt,
+};
 
-const contactLinks = [
-  {
-    icon: FaGithub,
-    label: "GitHub",
-    value: "github.com/Kaushik-29",
-    href: "https://github.com/Kaushik-29",
-  },
-  {
-    icon: FaLinkedin,
-    label: "LinkedIn",
-    value: "linkedin.com/in/kaushik29",
-    href: "https://www.linkedin.com/in/kaushik29/",
-  },
-  {
-    icon: FaEnvelope,
-    label: "Email",
-    value: "29skkr2005@gmail.com",
-    href: "mailto:29skkr2005@gmail.com",
-  },
-  {
-    icon: FaMapMarkerAlt,
-    label: "Location",
-    value: "Rajahmundry, India",
-  },
-];
+const contactLinks = contact.links.map((c) => ({ ...c, icon: contactIcons[c.key] }));
 
 export function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
-  const [sending, setSending] = useState(false);
-
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!form.name || !form.email || !form.message) {
-      toast.error("Please fill in name, email, and message.");
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(form.email)) {
-      toast.error("Please enter a valid email address.");
-      return;
-    }
-
-    setSending(true);
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          name: form.name,
-          email: form.email,
-          subject: form.subject || "Portfolio Contact Form",
-          message: form.message,
-          // Honeypot anti-spam field (leave empty)
-          botcheck: "",
-        }),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        setForm({ name: "", email: "", subject: "", message: "" });
-        toast.success("Message sent! I'll get back to you within 24 hours. 🎉");
-      } else {
-        throw new Error(data.message || "Submission failed");
-      }
-    } catch (err) {
-      console.error("Web3Forms error:", err);
-      toast.error("Failed to send message. Please try emailing me directly.");
-    } finally {
-      setSending(false);
-    }
-  };
+  const { form, setForm, sending, onSubmit } = useContactForm();
 
   const field =
     "w-full border border-gold/30 bg-deep-red-3/60 px-4 py-3 text-sm text-cream placeholder:text-cream/40 outline-none transition-colors focus:border-gold";
@@ -96,7 +28,7 @@ export function Contact() {
   return (
     <section id="contact" className="section-pad relative">
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading eyebrow="Get In Touch" title="Let's Connect" />
+        <SectionHeading {...sectionHeadings.contact} />
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_1.2fr]">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -106,8 +38,7 @@ export function Contact() {
             className="space-y-5"
           >
             <p className="text-base leading-relaxed text-cream/85">
-              Open to full-time roles, internships, freelance collaborations, and interesting
-              research conversations. Drop a message — I respond within 24 hours.
+              {contact.intro}
             </p>
             <div className="space-y-3">
               {contactLinks.map((c) => {
@@ -125,10 +56,10 @@ export function Contact() {
                     </div>
                   </div>
                 );
-                return "href" in c ? (
+                return c.href ? (
                   <a
                     key={c.label}
-                    href={(c as { href: string }).href}
+                    href={c.href}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -156,7 +87,7 @@ export function Contact() {
               <input
                 name="name"
                 className={field}
-                placeholder="Your Name"
+                placeholder={contact.placeholders.name}
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 maxLength={100}
@@ -165,7 +96,7 @@ export function Contact() {
               <input
                 name="email"
                 className={field}
-                placeholder="Email"
+                placeholder={contact.placeholders.email}
                 type="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -176,7 +107,7 @@ export function Contact() {
             <input
               name="subject"
               className={`${field} mt-4`}
-              placeholder="Subject (e.g. Hire Me, Collaboration…)"
+              placeholder={contact.placeholders.subject}
               value={form.subject}
               onChange={(e) => setForm({ ...form, subject: e.target.value })}
               maxLength={150}
@@ -184,7 +115,7 @@ export function Contact() {
             <textarea
               name="message"
               className={`${field} mt-4 min-h-[160px] resize-y`}
-              placeholder="Your message…"
+              placeholder={contact.placeholders.message}
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               maxLength={1000}

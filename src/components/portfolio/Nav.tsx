@@ -1,16 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { navLinks, profile } from "@/content/portfolio";
+import { BlackHoleButton } from "@/components/transition/BlackHoleButton";
 
-const links = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#education", label: "Education" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#certifications", label: "Certifications" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
-];
+const links = navLinks;
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,9 +27,9 @@ export function Nav() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <a href="#home" className="font-brush text-3xl gold-gradient-text">
-          Kaushik
+          {profile.firstName}
         </a>
-        <ul className="hidden items-center gap-8 md:flex">
+        <ul className="hidden items-center gap-8 lg:flex">
           {links.map((l) => (
             <li key={l.href}>
               <a
@@ -48,25 +41,31 @@ export function Nav() {
               </a>
             </li>
           ))}
+          <li className="-mx-3 -my-2">
+            <BlackHoleButton />
+          </li>
         </ul>
         <a
           href="#contact"
-          className="hidden border border-gold/60 bg-transparent px-5 py-2 text-sm font-semibold uppercase tracking-wider text-gold transition-all hover:bg-gold hover:text-deep-red-3 md:inline-block"
+          className="hidden border border-gold/60 bg-transparent px-5 py-2 text-sm font-semibold uppercase tracking-wider text-gold transition-all hover:bg-gold hover:text-deep-red-3 lg:inline-block"
         >
           Hire Me
         </a>
-        <button
-          aria-label="Toggle menu"
-          onClick={() => setOpen((v) => !v)}
-          className="md:hidden border border-gold/40 p-2 text-gold"
-        >
-          <div className="h-0.5 w-5 bg-gold mb-1" />
-          <div className="h-0.5 w-5 bg-gold mb-1" />
-          <div className="h-0.5 w-5 bg-gold" />
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <BlackHoleButton />
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setOpen((v) => !v)}
+            className="border border-gold/40 p-2 text-gold"
+          >
+            <div className="h-0.5 w-5 bg-gold mb-1" />
+            <div className="h-0.5 w-5 bg-gold mb-1" />
+            <div className="h-0.5 w-5 bg-gold" />
+          </button>
+        </div>
       </nav>
       {open && (
-        <div className="md:hidden border-t border-gold/20 bg-deep-red-3/95">
+        <div className="lg:hidden border-t border-gold/20 bg-deep-red-3/95">
           <ul className="flex flex-col gap-1 px-6 py-4">
             {links.map((l) => (
               <li key={l.href}>
